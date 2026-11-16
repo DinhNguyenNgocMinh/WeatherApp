@@ -1,38 +1,63 @@
-# Weather App
+# Weather ETL Pipeline
+
 ## Introduction
-Basically, the program gets the data from **open-mateo** by **api**. Currently it only took the **weather of Hanoi** in the range of 7 days
+This project is a simple data pipeline that fetches weather forecast data from the **Open-Meteo API**. Currently, the application retrieves and processes a **7-day weather forecast for Hanoi**.
 
-## Data Engineering
-I choose the ETL (Extract - Transform - Load) pipeline to make it simple and clear. Now I just done with the Transform step, I haven't move on to the Load secion yet cuz I still don't know how to load to Postgres
+## Data Architecture
+The project follows a standard **ETL (Extract - Transform - Load)** architecture to keep the data flow clean and modular. 
 
-### Flow
+* **Extract:** Fetch raw JSON data from the Open-Meteo API.
+* **Transform:** Clean, format, and structure the data using `pandas`.
+* **Load:** *(In Progress)* Load the transformed data into a **PostgreSQL** database.
+
+### Pipeline Flow
 ```mermaid
 flowchart LR
     subgraph Extract
-        A[API Source: https://api.open-meteo.com]
+        A["API Source: Open-Meteo"]
     end
     subgraph Transform
-        B[Clean & Format Data: pandas]
+        B["Clean & Format: pandas"]
     end
-    A --> B
+    subgraph Load ["Load (Planned)"]
+        C[("PostgreSQL")]
+    end
 
-
+    A --> B -.-> C
 ```
 
-## Requirements
+## Setup & Installation
 
-***Requirements.txt***
-```
+### 1. Prerequisites
+Ensure you have Python 3.8+ installed. Create a `requirements.txt` file with the following dependencies *(Note: `datetime` is built-in and does not need to be installed)*:
+```text
 pandas
 matplotlib
 requests
-datetime
 ```
 
-***How to install***
-```
+### 2. Installation
+Clone the repository and set up your virtual environment:
+
+```bash
+# Create virtual environment
 python -m venv .venv
-.venv/Scripts/activate
-python -m pip install -r requirements
+
+# Activate virtual environment (Windows)
+.venv\Scripts\activate
+
+# Install dependencies
+python -m pip install -r requirements.txt
 ```
 
+## Usage
+Run the main pipeline script:
+```bash
+python show.py
+```
+
+## Roadmap
+- [x] Extract weather data for Hanoi via API
+- [x] Clean and transform data using Pandas
+- [ ] Load processed data into PostgreSQL
+- [x] Visualize temperature trends using Matplotlib
