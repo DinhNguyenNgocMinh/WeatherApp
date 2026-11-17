@@ -1,5 +1,6 @@
 from extract import get_weather
 import pandas as pd
+from datetime import date
 
 df = pd.DataFrame(get_weather()['hourly'])
 
@@ -27,10 +28,11 @@ df = df.astype({
 })
 
 # Set index
-df.set_index('id', inplace=True)
+# df.set_index('id', inplace=True)
 
 # Group
 df.groupby(['Date', 'Time'])
 
-def get_temperature(date):
+today=date.today()
+def get_temperature(date=today):
     return df[df['Date'].str.contains(str(date))]
